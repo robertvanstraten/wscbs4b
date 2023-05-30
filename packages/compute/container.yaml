@@ -1,0 +1,93 @@
+name: compute
+version: 1.0.0
+kind: ecu # Executable Code Unit
+
+description:
+
+contributors:
+
+dependencies:
+  - python3
+  - python3-pip
+
+install:
+  - apt update && apt upgrade -y
+  - apt install pipenv -y
+
+files:
+  - requirements.txt
+  - compute.py
+  - model.py 
+  - preprocess.py
+
+postinstall:
+- pip3 install -r requirements.txt
+
+entrypoint:
+  kind: task
+  exec: compute.py
+
+actions:
+  'one_hot':
+    command:
+      capture: marked
+      args:
+        - one_hot
+    input:
+    - type: IntermediateResult
+      name: filepath
+    output:
+    - type: IntermediateResult
+      name: filepath
+  'drop_columns':
+    command:
+      args:
+        - drop_columns
+    input:
+    - type: IntermediateResult
+      name: filepath
+    output:
+    - type: IntermediateResult
+      name: filepath
+  'impute_median':
+    command:
+      args:
+        - impute_median
+    input:
+    - type: IntermediateResult
+      name: filepath
+    output:
+    - type: IntermediateResult
+      name: filepath
+  'standardize':
+    command:
+      args:
+        - standardize
+    input:
+    - type: IntermediateResult
+      name: filepath
+    output:
+    - type: IntermediateResult
+      name: filepath
+  'train_model':
+    command:
+      args:
+        - train_model
+    input:
+    - type: IntermediateResult
+      name: filepath
+    output:
+    - type: IntermediateResult
+      name: model
+  'predict':
+    command:
+      args:
+        - predict
+    input:
+    - type: IntermediateResult
+      name: model
+    - type: IntermediateResult
+      name: test_path
+    output:
+    - type: IntermediateResult
+      name: submission

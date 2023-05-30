@@ -1,0 +1,32 @@
+// PIPELINE
+
+import compute;
+import visualization;
+
+
+println("Add one hot encoded columns dataset...");
+let train_in := new Data{ name := "titanic_train" };
+let test_in := new Data{ name := "titanic_test" };
+
+let train := one_hot(train_in);
+let test  := one_hot(test_in);
+
+println("Remove leaky/useless columns dataset...");
+train := drop_columns(train);
+test  := drop_columns(test);
+
+println("Impute median columns dataset...");
+train := impute_median(train);
+test  := impute_median(test);
+
+println("Standardise columns dataset...");
+train := standardize(train);
+test  := standardize(test);
+
+println("Training model...");
+let model := train_model(train);
+
+println("Predicting...");
+let submission := predict(model, test);
+
+    

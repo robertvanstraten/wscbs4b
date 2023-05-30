@@ -1,0 +1,11 @@
+# DATA.yml for the test set
+
+# Set some metadata for this dataset
+name: titanic_train
+owners:
+description: Training set for Titanic - Machine Learning from Disaster.
+
+# This is the real magic: we tell Brane we mean this file
+access:
+  kind: file
+  path: ./data
