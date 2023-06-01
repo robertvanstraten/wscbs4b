@@ -1,0 +1,75 @@
+name: visualise
+version: 1.0.0
+kind: ecu # Executable Code Unit
+
+description:
+
+contributors:
+
+dependencies:
+  - python3
+  - python3-pip
+
+install:
+  - apt update && apt upgrade -y
+  - apt install pipenv -y
+
+files:
+  - requirements.txt
+  - visualise.py
+  - run.py
+
+postinstall:
+- pip3 install -r requirements.txt
+
+entrypoint:
+  kind: task
+  exec: run.py
+
+actions:
+  'plot_bar_gender':
+    command:
+      capture: prefixed
+      args:
+        - plot_bar_gender
+    input:
+    - type: IntermediateResult
+      name: filepath
+    output:
+    - type: IntermediateResult
+      name: filepath
+  'plot_hist_fare':
+    command:
+      capture: prefixed
+      args:
+        - plot_hist_fare
+    input:
+    - type: IntermediateResult
+      name: filepath
+    output:
+    - type: IntermediateResult
+      name: filepath
+  'plot_hist_age':
+    command:
+      capture: prefixed
+      args:
+        - plot_hist_age
+    input:
+    - type: IntermediateResult
+      name: filepath
+    output:
+    - type: IntermediateResult
+      name: filepath
+  'heat_class_gender':
+    command:
+      capture: prefixed
+      args:
+        - heat_class_gender
+    input:
+    - type: IntermediateResult
+      name: filepath
+    output:
+    - type: IntermediateResult
+      name: filepath
+
+  

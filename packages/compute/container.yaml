@@ -41,6 +41,7 @@ actions:
       name: filepath
   'drop_columns':
     command:
+      capture: marked
       args:
         - drop_columns
     input:
@@ -51,6 +52,7 @@ actions:
       name: filepath
   'impute_median':
     command:
+      capture: marked
       args:
         - impute_median
     input:
@@ -61,6 +63,7 @@ actions:
       name: filepath
   'standardize':
     command:
+      capture: marked
       args:
         - standardize
     input:
@@ -71,6 +74,7 @@ actions:
       name: filepath
   'train_model':
     command:
+      capture: marked
       args:
         - train_model
     input:
@@ -81,13 +85,27 @@ actions:
       name: model
   'predict':
     command:
+      capture: marked
       args:
         - predict
     input:
     - type: IntermediateResult
       name: model
     - type: IntermediateResult
-      name: test_path
+      name: filepath
     output:
     - type: IntermediateResult
       name: submission
+  'combine':
+    command:
+      capture: marked
+      args:
+        - combine
+    input:
+    - type: IntermediateResult
+      name: filepath
+    - type: IntermediateResult
+      name: submission
+    output:
+    - type: IntermediateResult
+      name: test_full

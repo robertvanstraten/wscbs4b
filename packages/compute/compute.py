@@ -4,44 +4,60 @@
 import sys
 import os
 import json
+import yaml
+import pandas as pd
 
 from preprocess import one_hot, drop_columns, impute_median, standardize
-from model import train_model, predict
+from model import train_model, predict, combine
 
+
+def print_output(data: dict):
+    """
+    Creates a marked section in the standard output
+    of the container in order for Brane to isolate the result.
+
+    Parameters
+    ----------
+    data: `dict`
+    Any valid Python dictionary that is YAML serializable.
+    """
+    print("--> START CAPTURE")
+    print(yaml.dump(data))
+    print("--> END CAPTURE")
 
 def main():
     command = sys.argv[1]
-    test_path = f"{json.loads(os.environ['FILEPATH'])}/test.csv"
-    train_path = f"{json.loads(os.environ['FILEPATH'])}/train.csv"
     
     if command == "one_hot":
-        filepath_out = one_hot(test_path)
-        filepath_out = one_hot(train_path)
-        return
+        data_path = json.loads(os.environ["FILEPATH"])
+        one_hot(data_path)
 
-    if command == "drop_columns":
-        filepath_out = drop_columns(test_path)
-        filepath_out = drop_columns(train_path)
-        return
+    elif command == "drop_columns":
+        data_path = json.loads(os.environ["FILEPATH"])
+        drop_columns(data_path)
 
-    if command == "impute_median":
-        filepath_out = impute_median(test_path)
-        filepath_out = impute_median(train_path)
-        return
+    elif command == "impute_median":
+        data_path = json.loads(os.environ["FILEPATH"])
+        impute_median(data_path)
 
-    if command == "standardize":
-        filepath_out = standardize(test_path)
-        filepath_out = standardize(train_path)
-        return
+    elif command == "standardize":
+        data_path = json.loads(os.environ["FILEPATH"])
+        standardize(data_path)
 
-    if command == "train_model":
-        filepath_model = train_model(train_path)
-        return
+    elif command == "train_model":
+        data_path = json.loads(os.environ["FILEPATH"])
+        train_model(data_path)
 
-    if command == "predict":
-        model_path = f"{json.loads(os.environ['MODEL'])}/model.pickle"
-        filepath_out = predict(model_path, test_path)
-        return
+    elif command == "predict":
+        model_path = json.loads(os.environ['MODEL'])
+        data_path = json.loads(os.environ["FILEPATH"])
+        predict(model_path, data_path)
+
+    elif command == "combine":
+        submission = json.loads(os.environ['SUBMISSION'])
+        data_path = json.loads(os.environ["FILEPATH"])
+        combine(data_path, submission)    
+    pass
 
 
 if __name__ == '__main__':
