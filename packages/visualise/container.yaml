@@ -18,6 +18,7 @@ files:
   - requirements.txt
   - visualise.py
   - run.py
+  - interface.py
 
 postinstall:
 - pip3 install -r requirements.txt
@@ -68,6 +69,23 @@ actions:
     input:
     - type: IntermediateResult
       name: filepath
+    output:
+    - type: IntermediateResult
+      name: filepath
+  'generate_interface':
+    command:
+      capture: prefixed
+      args:
+        - generate_interface
+    input:
+    - type: IntermediateResult
+      name: plot_1
+    - type: IntermediateResult
+      name: plot_2
+    - type: IntermediateResult
+      name: plot_3
+    - type: IntermediateResult
+      name: plot_4
     output:
     - type: IntermediateResult
       name: filepath

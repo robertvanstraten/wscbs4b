@@ -43,7 +43,8 @@ println("Plot age histogram...");
 let plot_age := plot_hist_age(full_test);
 
 println("Plot class gender heatmap...");
-let plot_class_gener := heat_class_gender(full_test);
+let plot_class_gender := heat_class_gender(full_test);
 
 println("Generate plot interface...");
-
+let interface := generate_interface(plot_gender, plot_fare, plot_age, plot_class_gender);
+commit_result("titanic_interface", interface);
