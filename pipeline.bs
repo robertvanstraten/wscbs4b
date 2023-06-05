@@ -10,15 +10,15 @@ let test_og := new Data{ name := "titanic_test" };
 let train := one_hot(new Data{ name := "titanic_train" });
 let test  := one_hot(test_og);
 
-println("Remove leaky/useless columns dataset...");
+println("Removing leaky/useless columns dataset...");
 train := drop_columns(train);
 test  := drop_columns(test);
 
-println("Impute median columns dataset...");
+println("Imputing median columns dataset...");
 train := impute_median(train);
 test  := impute_median(test);
 
-println("Standardise columns dataset...");
+println("Standardising columns dataset...");
 train := standardize(train);
 test  := standardize(test);
 
@@ -29,22 +29,25 @@ println("Predicting...");
 let submission := predict(model, test);
 
 commit_result("kaggle_submission", submission);
+println("Kaggle submission result committed!");
 
 println("Combining test and submission...");
 let full_test := combine(submission, test_og);
 
-println("Plot gender bar...");
+println("Plotting gender bar...");
 let plot_gender := plot_bar_gender(full_test);
 
-println("Plot fare histogram...");
+println("Plotting fare histogram...");
 let plot_fare := plot_hist_fare(full_test);
 
-println("Plot age histogram...");
+println("Plotting age histogram...");
 let plot_age := plot_hist_age(full_test);
 
-println("Plot class gender heatmap...");
+println("Plotting class gender heatmap...");
 let plot_class_gender := heat_class_gender(full_test);
 
-println("Generate plot interface...");
+println("Generating plot interface...");
 let interface := generate_interface(plot_gender, plot_fare, plot_age, plot_class_gender);
+
 commit_result("titanic_interface", interface);
+println("Plot dashboard committed!");
