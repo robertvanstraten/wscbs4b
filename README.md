@@ -7,13 +7,13 @@ This repo contains code that implemtents the [Kaggle Titanic challenge](https://
 When BRANE is correctly set up, each package can be individually imported with the following command:
 
 ```bash
-brane import robertvanstraten/wscbs4b -c packages/<PACKAGE_NAME>/container.yml
+brane import robertvanstraten/wscbs4b -c packages/<PACKAGE_NAME>/container.yaml
 ```
 
 However, one can also clone this repository and navigate to the folder of a package and run the following command to build the package:
 
 ```
-brane build container.yml
+brane build container.yaml
 ```
 
 ## Attribution
